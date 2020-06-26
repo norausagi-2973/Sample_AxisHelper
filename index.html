@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="https://threejs.org/build/three.js"></script>
+  <script src="js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <script>
+    window.addEventListener('load', init);
+
+    function init() {
+      const width = 960;
+      const height = 540;
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas')
+      });
+
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, +1000);
+
+      //１つ目　AxisHelperを使う
+      var axis = new THREE.AxisHelper(20);  //軸の長さ
+      axis.position.set(10,10,10);  //座標の中心の位置
+      scene.add(axis);  //シーンに追加
+
+      tick();
+
+      var controls = new THREE.OrbitControls(camera, document.querySelector('#myCanvas'));
+
+      function tick() {
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+    }
+  </script>
+  <canvas id="myCanvas"></canvas>
+</body>
+</html>
